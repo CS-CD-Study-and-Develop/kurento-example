@@ -25,11 +25,20 @@ function handleConnection(socket) {
     console.log("connected");
 }
 
+const changeCharset = (message) => {
+    return Buffer.from(message, "base64").toString("utf-8");
+}
+
+const sockets = [];
+
 wss.on("connection", (socket) => {
+    sockets.push(socket);
     console.log("connected to browser");
     socket.on("close", () => console.log("disconnected from browser"));
-    socket.on("message", (message) => console.log(message));
-    socket.send("hello");
+    socket.on("message", (message) => {
+        console.log(changeCharset(message));
+        sockets.forEach(aSocket => aSocket.send(changeCharset(message)));
+    });
 });
 
 server.listen(3000, handleListen);
