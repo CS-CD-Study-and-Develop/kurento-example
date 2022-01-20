@@ -21,13 +21,14 @@ wsServer.on("connection", (socket) => {
   socket.onAny((event) => {
     console.log(`Socket Event: ${event}`);
   });
-  socket.on("enter_room", (roomName, done) => {
+  socket.on("enter_room", (roomName, nickname, done) => {
     console.log(socket.id);
     console.log(socket.rooms);
     socket.join(roomName);
     console.log(socket.rooms);
+    socket["nickname"] = nickname;
     done();
-    socket.to(roomName).emit("welcome");
+    socket.to(roomName).emit("welcome", nickname);
   });
   socket.on("disconnecting", () => {
     socket.rooms.forEach((room) => socket.to(room).emit("bye", socket.nickname));
