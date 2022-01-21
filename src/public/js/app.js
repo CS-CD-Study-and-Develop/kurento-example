@@ -68,7 +68,7 @@ function handleMuteClick() {
   }
 }
 
-function handleCamearClick() {
+function handleCameraClick() {
   myStream
     .getVideoTracks()
     .forEach((track) => (track.enabled = !track.enabled));
@@ -86,7 +86,7 @@ async function handleCameraChange() {
 }
 
 muteBtn.addEventListener("click", handleMuteClick);
-camearBtn.addEventListener("click", handleCamearClick);
+camearBtn.addEventListener("click", handleCameraClick);
 camerasSelect.addEventListener("input", handleCameraChange);
 
 const welcome = document.querySelector("#welcome");
@@ -120,7 +120,7 @@ socket.on("welcome", async () => {
 socket.on("offer", async (offer) => {
   myPeerConnection.setRemoteDescription(offer);
   const answer = await myPeerConnection.createAnswer();
-  myPeerConnection.setLocalDescription(offer);
+  myPeerConnection.setLocalDescription(answer);
   socket.emit("answer", answer, roomName);
   console.log("send the answer");
 });
