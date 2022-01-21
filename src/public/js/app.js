@@ -24,6 +24,9 @@ async function getMedia() {
 getMedia();
 
 function handleMuteClick() {
+  myStream
+    .getAudioTracks()
+    .forEach((track) => (track.enabled = !track.enabled));
   if(!muted) {
     muteBtn.innerHTML = "Unmute";
     muted = true;
@@ -33,6 +36,9 @@ function handleMuteClick() {
   }
 }
 function handleCamearClick() {
+  myStream
+  .getVideoTracks()
+  .forEach((track) => (track.enabled = !track.enabled));
   if(cameraOff) {
     camearBtn.innerHTML = "Turn Camera Off";
     cameraOff = false;
